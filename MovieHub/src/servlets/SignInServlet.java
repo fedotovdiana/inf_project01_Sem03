@@ -16,8 +16,6 @@ import java.io.IOException;
 public class SignInServlet extends HttpServlet {
 
     private UserService userService = new UserService();
-
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -41,6 +39,13 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Helper.render(request, response, "sign_in.ftl", null);
+        HttpSession session = request.getSession();
+        String user = (String)session.getAttribute("user");
+        //если есть в сессии, редирект к фильмам
+        if (user != null) {
+            response.sendRedirect("/films");
+        } else {
+            Helper.render(request, response, "sign_in.ftl", null);
+        }
     }
 }

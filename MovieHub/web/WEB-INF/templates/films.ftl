@@ -20,5 +20,8 @@
 <form action="http://localhost:8080/logout" method="get">
     <input type="submit" value="Log out"/>
 </form>
+<form action="http://localhost:8080/profile" method="get">
+    <input type="submit" value="Profile"/>
+</form>
 </body>
 </html>

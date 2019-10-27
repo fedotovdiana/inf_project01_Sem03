@@ -33,6 +33,7 @@ public class SignUpServlet extends HttpServlet {
             //если не зарегистрирован, зарегистрировать
         } else {
             userService.register(name, login, password, photo);
+            session.setAttribute("user", login);
             response.sendRedirect("/films");
         }
     }
@@ -51,71 +52,3 @@ public class SignUpServlet extends HttpServlet {
     }
 
 }
-
-//    @Override
-//    protected void doPost(
-//            HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        RequestCustomer customer = RequestCustomer.fromRequestParameters(request);
-//        customer.setAsRequestAttributes(request);
-//        List violations = customer.validate();
-//
-//        if (!violations.isEmpty()) {
-//            request.setAttribute("violations", violations);
-//        }
-//
-//        String url = determineUrl(violations);
-//        request.getRequestDispatcher(url).forward(request, response);
-//    }
-//
-//    private String determineUrl(List violations) {
-//        if (!violations.isEmpty()) {
-//            return "/";
-//        } else {
-//            return "/WEB-INF/views/customerinfo.jsp";
-//        }
-//    }
-//
-//    private static class RequestCustomer {
-//
-//        private final String firstName;
-//        private final String lastName;
-//        private final String email;
-//
-//        private RequestCustomer(String firstName, String lastName, String email) {
-//            this.firstName = firstName;
-//            this.lastName = lastName;
-//            this.email = email;
-//        }
-//
-//        public static RequestCustomer fromRequestParameters(
-//                HttpServletRequest request) {
-//            return new RequestCustomer(
-//                    request.getParameter("firstname"),
-//                    request.getParameter("lastname"),
-//                    request.getParameter("email"));
-//        }
-//
-//        public void setAsRequestAttributes(HttpServletRequest request) {
-//            request.setAttribute("firstname", firstName);
-//            request.setAttribute("lastname", lastName);
-//            request.setAttribute("email", email);
-//        }
-//
-//        public List validate() {
-//            List violations = new ArrayList<>();
-//            if (!StringValidator.validate(firstName)) {
-//                violations.add("Имя является обязательным полем");
-//            }
-//            if (!StringValidator.validate(lastName)) {
-//                violations.add("Фамилия является обязательным полем");
-//            }
-//            if (!EmailValidator.validate(email)) {
-//                violations.add("Email должен быть правильно сформирован");
-//            }
-//            return violations;
-//        }
-//
-//    }
-//}

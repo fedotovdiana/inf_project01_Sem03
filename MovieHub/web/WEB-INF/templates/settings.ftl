@@ -7,10 +7,10 @@
 <body>
 <p>Settings</p>
 <form action="http://localhost:8080/settings" method="post">
-    <input type="text" name="name" value ="Diana"/>
-    <input type="text" name="login"/>
-    <input type="password" name="password"/>
-    <input type="text" name="img"/>
+    <input type="text" name="name" value="${user.name}"/>
+    <input type="text" name="login" value="${user.login}"/>
+    <input type="password" name="password" value="${user.password}"/>
+    <input type="text" name="photo" value="${user.photo}"/>
     <input type="submit" value="Save"/>
 </form>
 </body>

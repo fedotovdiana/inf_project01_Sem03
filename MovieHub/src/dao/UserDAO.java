@@ -15,6 +15,8 @@ public class UserDAO implements DAO<User> {
     private String SQL_INSERT = "INSERT INTO users (name, login, password, photo) VALUES (?, ?, ?, ?)";
     private String SQL_DELETE = "DELETE FROM users WHERE id = ?";
     private String SQL_SELECT = "SELECT * FROM users WHERE login = ? AND password = ?";
+    private String SQL_SELECT_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private String SQL_UPDATE = "UPDATE users SET name = ? , login = ?, password = ?, photo = ? WHERE id = ?";
 
     private Connection connection;
 
@@ -54,7 +56,8 @@ public class UserDAO implements DAO<User> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                user = new User(id, rs.getString("name"), rs.getString("login"), rs.getString("password"), rs.getString("photo"));
+                user = new User(id, rs.getString("name"), rs.getString("login"),
+                        rs.getString("password"), rs.getString("photo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,6 +69,20 @@ public class UserDAO implements DAO<User> {
     @Override
     public void update(User user) {
 
+    }
+
+    public void update(int id, String name, String login, String password, String photo) {
+        try {
+            PreparedStatement st = connection.prepareStatement(SQL_UPDATE);
+            st.setString(1, name);
+            st.setString(2, login);
+            st.setString(3, password);
+            st.setString(4, photo);
+            st.setInt(5, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -88,7 +105,8 @@ public class UserDAO implements DAO<User> {
             st = connection.prepareStatement(SQL_GET_ALL);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("login"), rs.getString("password"), rs.getString("photo"));
+                User user = new User(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("login"), rs.getString("password"), rs.getString("photo"));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -109,6 +127,23 @@ public class UserDAO implements DAO<User> {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public User getUserByLogin(String login) {
+        User user = null;
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_LOGIN);
+            st.setString(1, login);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("name"),
+                        login, rs.getString("password"), rs.getString("photo"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
 
