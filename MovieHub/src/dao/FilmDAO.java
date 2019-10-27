@@ -1,10 +1,7 @@
 package dao;
 
 import helpers.ConnectHelper;
-import models.Actor;
-import models.Film;
-import models.Producer;
-import models.Scriptwriter;
+import models.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,8 +20,8 @@ public class FilmDAO implements DAO<Film> {
     private String SQL_SELECT_BY_NAME = "SELECT * FROM films WHERE name = ?";
     private String SQL_SELECT_ACTORS = "SELECT * FROM actors WHERE id IN (SELECT actor_id FROM actor_film WHERE film_id = ?)";
     private String SQL_SELECT_PRODUCERS = "SELECT * FROM producers WHERE id IN (SELECT producer_id FROM producer_film WHERE film_id = ?)";
-    private String SQL_SELECT_SQRIPTWRITERS = "SELECT * FROM scriptwriters WHERE id IN (SELECT scriptwriter_id FROM scriptwriter_film WHERE film_id = ?)";
-
+    private String SQL_SELECT_SCRIPTWRITERS = "SELECT * FROM scriptwriters WHERE id IN (SELECT scriptwriter_id FROM scriptwriter_film WHERE film_id = ?)";
+    private String SQL_SELECT_CATEGORIES = "SELECT * FROM categories WHERE id IN (SELECT category_id FROM category_film WHERE film_id = ?)";
 
     private Connection connection;
 
@@ -148,7 +145,7 @@ public class FilmDAO implements DAO<Film> {
         List<Scriptwriter> scriptwriters = new ArrayList<>();
         PreparedStatement st = null;
         try {
-            st = connection.prepareStatement(SQL_SELECT_SQRIPTWRITERS);
+            st = connection.prepareStatement(SQL_SELECT_SCRIPTWRITERS);
             st.setInt(1, film.getId());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -161,5 +158,22 @@ public class FilmDAO implements DAO<Film> {
             e.printStackTrace();
         }
         return scriptwriters;
+    }
+
+    public List<Category> getCategories(Film film) {
+        List<Category> categories = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_CATEGORIES);
+            st.setInt(1, film.getId());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Category category = new Category(rs.getInt("id"), rs.getString("name"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
 }

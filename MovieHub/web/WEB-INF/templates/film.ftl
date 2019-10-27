@@ -17,6 +17,15 @@
     </tr>
 </table>
 
+<p>Categories</p>
+<table border="1">
+    <#list categories as c>
+        <tr>
+          <td>${c.name}</td>
+        </tr>
+    </#list>
+</table>
+
 <p>Actors</p>
 <table border="1">
     <#list actors as a>

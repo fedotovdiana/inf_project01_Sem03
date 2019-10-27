@@ -1,10 +1,7 @@
 package services;
 
 import dao.FilmDAO;
-import models.Actor;
-import models.Film;
-import models.Producer;
-import models.Scriptwriter;
+import models.*;
 
 import java.util.List;
 
@@ -30,5 +27,9 @@ public class FilmService {
 
     public List<Scriptwriter> getScriptwriters(Film film) {
         return filmDAO.getScriptwriters(film);
+    }
+
+    public List<Category> getCategories(Film film) {
+        return filmDAO.getCategories(film);
     }
 }

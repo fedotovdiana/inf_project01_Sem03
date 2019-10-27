@@ -1,10 +1,7 @@
 package servlets;
 
 import helpers.Helper;
-import models.Actor;
-import models.Film;
-import models.Producer;
-import models.Scriptwriter;
+import models.*;
 import services.FilmService;
 
 import javax.servlet.ServletException;
@@ -33,10 +30,12 @@ public class FilmServlet extends HttpServlet {
         List<Actor> actors = filmService.getActors(film);
         List<Producer> producers = filmService.getProducers(film);
         List<Scriptwriter> scriptwriters = filmService.getScriptwriters(film);
+        List<Category> categories = filmService.getCategories(film);
         root.put("film", film);
         root.put("actors", actors);
         root.put("producers", producers);
         root.put("scriptwriters", scriptwriters);
+        root.put("categories", categories);
         Helper.render(request, response, "film.ftl", root);
     }
 }
