@@ -9,6 +9,17 @@
 <p>${user.login}</p>
 <p>${user.password}</p>
 <p>${user.photo}</p>
+<p>Checklists</p>
+<table border="1">
+    <#list checklists as c>
+        <tr>
+            <td><form action="http://localhost:8080/checklist" method="get">
+                <input type="submit" name= "checklist" value="${c.name}"/>
+            </form>
+            </td>
+        </tr>
+    </#list>
+</table>
 <form action="http://localhost:8080/settings" method="get">
     <input type="submit" value="Settings"/>
 </form>

@@ -32,4 +32,8 @@ public class FilmService {
     public List<Category> getCategories(Film film) {
         return filmDAO.getCategories(film);
     }
+
+    public List<Comment> getComments(Film film) {
+        return filmDAO.getComments(film);
+    }
 }

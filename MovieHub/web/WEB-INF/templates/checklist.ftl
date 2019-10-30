@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Films</title>
+    <title>Checklist</title>
 </head>
 <body>
 <p>Films</p>
+<#if films?has_content>
 <table border="1">
     <#list films as f>
         <tr>
@@ -18,9 +19,7 @@
             <td>${f.likes}</td>
         </tr>
     </#list>
+    </#if>
 </table>
-<form action="http://localhost:8080/profile" method="get">
-    <input type="submit" value="Profile"/>
-</form>
 </body>
 </html>

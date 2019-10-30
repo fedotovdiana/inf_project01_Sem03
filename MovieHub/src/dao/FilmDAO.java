@@ -22,6 +22,8 @@ public class FilmDAO implements DAO<Film> {
     private String SQL_SELECT_PRODUCERS = "SELECT * FROM producers WHERE id IN (SELECT producer_id FROM producer_film WHERE film_id = ?)";
     private String SQL_SELECT_SCRIPTWRITERS = "SELECT * FROM scriptwriters WHERE id IN (SELECT scriptwriter_id FROM scriptwriter_film WHERE film_id = ?)";
     private String SQL_SELECT_CATEGORIES = "SELECT * FROM categories WHERE id IN (SELECT category_id FROM category_film WHERE film_id = ?)";
+    private String SQL_SELECT_FILMS = "SELECT * FROM films WHERE id IN (SELECT film_id FROM checklist_film WHERE checklist_id IN (SELECT checklist_id FROM checklists WHERE name = ? AND user_id = ?))";
+    private String SQL_SELECT_COMMENTS = "SELECT * FROM comments WHERE film_id = ?";
 
     private Connection connection;
 
@@ -176,4 +178,48 @@ public class FilmDAO implements DAO<Film> {
         }
         return categories;
     }
+
+    public List<Film> getFilms(String checklist_name, int user_id) {
+        List<Film> films = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_FILMS);
+            System.out.println(checklist_name + user_id);
+            st.setString(1, checklist_name);
+            st.setInt(2, user_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Film film = new Film(rs.getInt("id"), rs.getString("name"), rs.getString("country"),
+                        rs.getString("date"), rs.getInt("likes"), rs.getInt("dislikes"),
+                        rs.getString("photo"), rs.getString("text"));
+
+                films.add(film);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return films;
+    }
+
+    public List<Comment> getComments(Film film) {
+        List<Comment> comments = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_COMMENTS);
+            st.setInt(1, film.getId());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Comment comment = new Comment(rs.getInt("comment_id"), rs.getString("user"),
+                        rs.getString("title"),
+                        rs.getString("text"), rs.getString("date"),
+                        rs.getInt("film_id"));
+                comments.add(comment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comments;
+    }
+
+
 }
