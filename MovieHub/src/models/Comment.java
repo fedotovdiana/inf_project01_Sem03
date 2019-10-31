@@ -4,15 +4,13 @@ public class Comment {
 
     private int comment_id;
     private String user;
-    private String title;
     private String text;
     private String date;
     private int film_id;
 
-    public Comment(int comment_id, String user, String title, String text, String date, int film_id) {
+    public Comment(int comment_id, String user,  String text, String date, int film_id) {
         this.comment_id = comment_id;
         this.user = user;
-        this.title = title;
         this.text = text;
         this.date = date;
         this.film_id = film_id;
@@ -32,14 +30,6 @@ public class Comment {
 
     public void setUser(String user_id) {
         this.user = user_id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getText() {

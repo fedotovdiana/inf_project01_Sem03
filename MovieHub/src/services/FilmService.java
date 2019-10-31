@@ -3,6 +3,7 @@ package services;
 import dao.FilmDAO;
 import models.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class FilmService {
@@ -35,5 +36,9 @@ public class FilmService {
 
     public List<Comment> getComments(Film film) {
         return filmDAO.getComments(film);
+    }
+
+    public void addComment(String user, String text, Timestamp timestamp, int film_id) {
+        filmDAO.addComment(user, text, timestamp, film_id);
     }
 }

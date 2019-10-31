@@ -6,11 +6,11 @@
 </head>
 <body>
 <p>Sign up</p>
-<form action="http://localhost:8080/sign_up" method="post">
+<form method="post" enctype="multipart/form-data">
     <input type="text" name="name"/>
     <input type="text" name="login"/>
     <input type="password" name="password"/>
-    <input type="text" name="photo"/>
+    <input type="file" name="photo"/>
     <input type="submit" value="Sign up"/>
 </form>
 </body>

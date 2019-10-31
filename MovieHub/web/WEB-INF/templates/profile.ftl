@@ -8,7 +8,8 @@
 <p>${user.name}</p>
 <p>${user.login}</p>
 <p>${user.password}</p>
-<p>${user.photo}</p>
+<img src="${user.photo!}" width="200">
+
 <p>Checklists</p>
 <table border="1">
     <#list checklists as c>

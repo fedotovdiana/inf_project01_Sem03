@@ -3,10 +3,8 @@ package dao;
 import helpers.ConnectHelper;
 import models.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +22,7 @@ public class FilmDAO implements DAO<Film> {
     private String SQL_SELECT_CATEGORIES = "SELECT * FROM categories WHERE id IN (SELECT category_id FROM category_film WHERE film_id = ?)";
     private String SQL_SELECT_FILMS = "SELECT * FROM films WHERE id IN (SELECT film_id FROM checklist_film WHERE checklist_id IN (SELECT checklist_id FROM checklists WHERE name = ? AND user_id = ?))";
     private String SQL_SELECT_COMMENTS = "SELECT * FROM comments WHERE film_id = ?";
+    private String SQL_INSERT_COMMENT = "INSERT INTO comments (user_name, text, date, film_id) VALUES (?, ?, ?, ?)";
 
     private Connection connection;
 
@@ -204,14 +203,14 @@ public class FilmDAO implements DAO<Film> {
     public List<Comment> getComments(Film film) {
         List<Comment> comments = new ArrayList<>();
         PreparedStatement st = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd.MM.yy");
         try {
             st = connection.prepareStatement(SQL_SELECT_COMMENTS);
             st.setInt(1, film.getId());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Comment comment = new Comment(rs.getInt("comment_id"), rs.getString("user"),
-                        rs.getString("title"),
-                        rs.getString("text"), rs.getString("date"),
+                Comment comment = new Comment(rs.getInt("comment_id"), rs.getString("user_name"),
+                        rs.getString("text"), sdf.format(rs.getTimestamp("date")),
                         rs.getInt("film_id"));
                 comments.add(comment);
             }
@@ -221,5 +220,18 @@ public class FilmDAO implements DAO<Film> {
         return comments;
     }
 
+    public void addComment(String user, String text, Timestamp date, int film_id) {
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_INSERT_COMMENT);
+            st.setString(1, user);
+            st.setString(2, text);
+            st.setTimestamp(3, date);
+            st.setInt(4, film_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

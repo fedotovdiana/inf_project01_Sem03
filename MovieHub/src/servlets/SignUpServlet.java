@@ -4,15 +4,15 @@ import helpers.Helper;
 import services.UserService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
 
 //registration
 @WebServlet(name = "SingUpServlet")
+@MultipartConfig
 public class SignUpServlet extends HttpServlet {
 
     private UserService userService = new UserService();
@@ -25,12 +25,22 @@ public class SignUpServlet extends HttpServlet {
         String name = request.getParameter("name");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        String photo = request.getParameter("photo");
-        //если нет, но уже зарегистрирован
+        //работа с фото
+        Part p = request.getPart("photo");
+        String localdir = "uploads";
+        String pathDir = getServletContext().getRealPath("") + File.separator + localdir;
+        File dir = new File(pathDir);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        String[] filename_data = p.getSubmittedFileName().split("\\.");
+        String filename = Math.random() + "." + filename_data[filename_data.length - 1];
+        String fullpath = pathDir + File.separator + filename;
+        p.write(fullpath);
+        String photo = "" + localdir + "/" + filename;
         if (userService.find(login, password)) {
             session.setAttribute("user", login);
             response.sendRedirect("/films");
-            //если не зарегистрирован, зарегистрировать
         } else {
             userService.register(name, login, password, photo);
             session.setAttribute("user", login);
@@ -43,7 +53,6 @@ public class SignUpServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = (String) session.getAttribute("user");
-        //если есть в сессии, редирект к фильмам
         if (user != null) {
             response.sendRedirect("/films");
         } else {

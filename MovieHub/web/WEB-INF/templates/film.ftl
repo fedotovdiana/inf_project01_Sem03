@@ -6,31 +6,48 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#call').click(function () {
+            $('#byn_add_comment').click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/comment",
+                    dataType: "json",
+                    data: {
+                        "text": $('#text_comment').val(),
+                        "film_name": "${film.name}"
+                    },
+                    success: function (msg) {
+                        $('#table_comments').append("<tr><td>" + msg.user_name + "</td><td>" + $('#text_comment').val() + "</td><td>" + msg.date + "</td></tr>");
+                        $('#text_comment').val("");
+                    }
+                });
+            });
+            $('#btn_add_to').click(function () {
                 $.ajax({
                     type: "post",
                     url: "/film",
                     data: {
-                        "input": $('select[name=selectors]').val(),
+                        "input": $('#selector').val(),
                         "name": "${film.name}"
                     },
                     success: function () {
-                        alert($('select[name=selectors]').val());
-                        $('#selectors').append("<#list checklists as c><option id=${c.name}>${c.name}</option></#list><option>" + $('select[name=selectors]').val() + "</option>");
+                        alert($('#selector').val());
+                        $('#selector').append("<#list checklists as c><option id=${c.name}>${c.name}</option></#list><option>" + $('#selector').val() + "</option>");
+                        $('#btn_add_to').attr("disabled", 'disabled');
                     }
                 });
             });
-            $('#add').click(function () {
+            $('#btn_add_to_new').click(function () {
                 $.ajax({
                     type: "post",
                     url: "/creation",
                     data: {
-                        "input": $('#text1').val(),
+                        "input": $('#text_new_ch').val(),
                         "name": "${film.name}"
                     },
                     success: function () {
-                        alert("Added in" + $('#text1').val());
-                        $('#text1').val("");
+                        alert("Added in" + $('#text_new_ch').val());
+                        $('#text_new_ch').val("");
+                        $('#btn_add_to').attr("disabled", 'disabled');
                     }
                 });
             });
@@ -104,51 +121,45 @@
     </table>
 </#if>
 
-<#if comments?has_content>
-    <p>Comments</p>
-    <table border="1">
-        <#list comments as c>
-            <tr>
-                <td>${c.user}</td>
-                <td>${c.title}</td>
-                <td>${c.text}</td>
-                <td>${c.date}</td>
-            </tr>
-        </#list>
-    </table>
-</#if>
-<div>
-    <textarea autofocus name="textarea" id="text"></textarea>
-</div>
-<div>
-    <input type="submit" id="add_comment" value="Add comment"/>
-</div>
+<p>Comments</p>
+<table border="1" id="table_comments">
+    <#list comments as c>
+        <tr>
+            <td>${c.user}</td>
+            <td>${c.text}</td>
+            <td>${c.date}</td>
+        </tr>
+    </#list>
+</table>
 
 
 <#if user??>
-    <p>Add to</p>
-    <table border="1">
-        <#if checklists?has_content>
-            <tr>
-                <select name="selectors" id="selectors">
-                    <#list checklists as c>
-                        <option id=${c.name}>${c.name}</option>
-                    </#list>
-                </select>
-            </tr>
-            <tr><input type="button" value="Add film into" id="call"/></tr>
-        </#if>
-        <tr>
-            <td>
-<#--                <form action="http://localhost:8080/creation" method="post">-->
-                    <input type="text" name="input" id="text1"/>
-                    <input type="hidden" name="name" value="${film.name}"/>
-                    <input type="submit" id="add" value="To new checklist"/>
-<#--                </form>-->
-            </td>
-        </tr>
-    </table>
-    <div id="somediv"></div>
+    <p>Add comment</p>
+    <div>
+        <textarea autofocus id="text_comment"></textarea>
+    </div>
+    <div>
+        <input type="submit" id="byn_add_comment" value="Add comment"/>
+    </div>
+    <#if checklists?has_content>
+        <div>
+            <span>
+            <select id="selector">
+                <#list checklists as c>
+                    <option id=${c.name}>${c.name}</option>
+                </#list>
+            </select>
+            </span>
+            <span>
+                <input type="button" id="btn_add_to" value="Add film into"/>
+            </span>
+        </div>
+    </#if>
+    <div>
+        <input type="text" id="text_new_ch" name="input"/>
+        <input type="hidden" name="name" value="${film.name}"/>
+        <input type="submit" id="btn_add_to_new" value="To new checklist"/>
+    </div>
 </#if>
 </body>
 </html>

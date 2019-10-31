@@ -20,10 +20,8 @@ public class CreationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = (String)request.getSession().getAttribute("user");
         User user = userService.getUser(login);
-        System.out.println(request.getParameter("input"));
         checklistService.add(request.getParameter("input"), user.getId());
         request.getRequestDispatcher("/film").include(request, response);
-       // response.sendRedirect("/profile");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
