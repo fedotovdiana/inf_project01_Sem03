@@ -15,7 +15,22 @@
                         "name": "${film.name}"
                     },
                     success: function () {
-                        alert('Film was added!');
+                        alert($('select[name=selectors]').val());
+                        $('#selectors').append("<#list checklists as c><option id=${c.name}>${c.name}</option></#list><option>" + $('select[name=selectors]').val() + "</option>");
+                    }
+                });
+            });
+            $('#add').click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/creation",
+                    data: {
+                        "input": $('#text1').val(),
+                        "name": "${film.name}"
+                    },
+                    success: function () {
+                        alert("Added in" + $('#text1').val());
+                        $('#text1').val("");
                     }
                 });
             });
@@ -102,13 +117,20 @@
         </#list>
     </table>
 </#if>
+<div>
+    <textarea autofocus name="textarea" id="text"></textarea>
+</div>
+<div>
+    <input type="submit" id="add_comment" value="Add comment"/>
+</div>
+
 
 <#if user??>
     <p>Add to</p>
     <table border="1">
         <#if checklists?has_content>
             <tr>
-                <select name="selectors">
+                <select name="selectors" id="selectors">
                     <#list checklists as c>
                         <option id=${c.name}>${c.name}</option>
                     </#list>
@@ -118,11 +140,11 @@
         </#if>
         <tr>
             <td>
-                <form action="http://localhost:8080/creation" method="post">
-                    <input type="text" name="input"/>
-                    <input type="hidden" name=name value="${film.name}"/>
+<#--                <form action="http://localhost:8080/creation" method="post">-->
+                    <input type="text" name="input" id="text1"/>
+                    <input type="hidden" name="name" value="${film.name}"/>
                     <input type="submit" id="add" value="To new checklist"/>
-                </form>
+<#--                </form>-->
             </td>
         </tr>
     </table>
@@ -130,7 +152,3 @@
 </#if>
 </body>
 </html>
-
-<#--<form action="http://localhost:8080/creating" method="post">-->
-<#--    <input type="text" name="checklist"/>-->
-<#--    <input type="submit" id="add" value="Add checklist"/></form>-->

@@ -23,7 +23,7 @@ public class CreationServlet extends HttpServlet {
         System.out.println(request.getParameter("input"));
         checklistService.add(request.getParameter("input"), user.getId());
         request.getRequestDispatcher("/film").include(request, response);
-        response.sendRedirect("/profile");
+       // response.sendRedirect("/profile");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
