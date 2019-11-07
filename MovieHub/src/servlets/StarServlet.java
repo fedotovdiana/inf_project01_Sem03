@@ -24,17 +24,17 @@ public class StarServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> root = new HashMap<>();
-        if (request.getParameter("producer_name") != null) {
-            String name = request.getParameter("producer_name");
-            root.put("star", starService.getProducer(name));
+        if (request.getParameter("producer_id") != null) {
+            int id = Integer.parseInt(request.getParameter("producer_id"));
+            root.put("star", starService.getProducer(id));
         }
-        if(request.getParameter("actor_name") != null) {
-            String name = request.getParameter("actor_name");
-            root.put("star", starService.getActor(name));
+        if(request.getParameter("actor_id") != null) {
+            int id = Integer.parseInt(request.getParameter("actor_id"));
+            root.put("star", starService.getActor(id));
         }
-        if (request.getParameter("scr_name") != null) {
-            String name = request.getParameter("scr_name");
-            root.put("star", starService.getScriptwriter(name));
+        if (request.getParameter("scr_id") != null) {
+            int id = Integer.parseInt(request.getParameter("scr_id"));
+            root.put("star", starService.getScriptwriter(id));
         }
         Helper.render(request, response, "star.ftl", root);
     }

@@ -15,6 +15,7 @@
     <#list checklists as c>
         <tr>
             <td><form action="http://localhost:8080/checklist" method="get">
+                    <input hidden name="checklist_id" value="${c.id_checklist}"/>
                 <input type="submit" name= "checklist" value="${c.name}"/>
             </form>
             </td>

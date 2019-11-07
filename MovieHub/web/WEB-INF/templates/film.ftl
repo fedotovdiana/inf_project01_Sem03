@@ -13,7 +13,7 @@
                     dataType: "json",
                     data: {
                         "text": $('#text_comment').val(),
-                        "film_name": "${film.name}"
+                        "film_id": "${film.id}"
                     },
                     success: function (msg) {
                         $('#table_comments').append("<tr><td>" + msg.user_name + "</td><td>" + $('#text_comment').val() + "</td><td>" + msg.date + "</td></tr>");
@@ -27,7 +27,7 @@
                     url: "/film",
                     data: {
                         "input": $('#selector').val(),
-                        "name": "${film.name}"
+                        "film_id": "${film.id}"
                     },
                     success: function () {
                         alert($('#selector').val());
@@ -42,10 +42,10 @@
                     url: "/creation",
                     data: {
                         "input": $('#text_new_ch').val(),
-                        "name": "${film.name}"
+                        "film_id": "${film.id}"
                     },
                     success: function () {
-                        alert("Added in" + $('#text_new_ch').val());
+                        alert("Added in " + $('#text_new_ch').val());
                         $('#text_new_ch').val("");
                         $('#btn_add_to').attr("disabled", 'disabled');
                     }
@@ -83,7 +83,9 @@
             <tr>
                 <td>
                     <form action="http://localhost:8080/star" method="get">
-                        <input type="submit" name="actor_name" value="${a.name}"/></form>
+                        <input hidden name="actor_id" value="${a.id}"/>
+                        <input type="submit" name="actor_name" value="${a.name}"/>
+                    </form>
                 </td>
                 <td>${a.photo}</td>
             </tr>
@@ -98,7 +100,9 @@
             <tr>
                 <td>
                     <form action="http://localhost:8080/star" method="get">
-                        <input type="submit" name="producer_name" value="${p.name}"/></form>
+                        <input hidden name="producer_id" value="${p.id}"/>
+                        <input type="submit" name="producer_name" value="${p.name}"/>
+                    </form>
                 </td>
                 <td>${p.photo}</td>
             </tr>
@@ -113,7 +117,9 @@
             <tr>
                 <td>
                     <form action="http://localhost:8080/star" method="get">
-                        <input type="submit" name="scr_name" value="${s.name}"/></form>
+                        <input hidden name="scr_id" value="${s.id}"/>
+                        <input type="submit" name="scr_name" value="${s.name}"/>
+                    </form>
                 </td>
                 <td>${s.photo}</td>
             </tr>
@@ -139,7 +145,7 @@
         <textarea autofocus id="text_comment"></textarea>
     </div>
     <div>
-        <input type="submit" id="byn_add_comment" value="Add comment"/>
+        <input type="button" id="byn_add_comment" value="Add comment"/>
     </div>
     <#if checklists?has_content>
         <div>
@@ -157,8 +163,8 @@
     </#if>
     <div>
         <input type="text" id="text_new_ch" name="input"/>
-        <input type="hidden" name="name" value="${film.name}"/>
-        <input type="submit" id="btn_add_to_new" value="To new checklist"/>
+        <#--        <input type="hidden" name="film" value="${film.id}"/>-->
+        <input type="button" id="btn_add_to_new" value="To new checklist"/>
     </div>
 </#if>
 </body>

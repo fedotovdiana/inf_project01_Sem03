@@ -6,11 +6,11 @@
 </head>
 <body>
 <p>Settings</p>
-<form action="http://localhost:8080/settings" method="post">
+<form method="post" enctype="multipart/form-data">
     <input type="text" name="name" value="${user.name}"/>
     <input type="text" name="login" value="${user.login}"/>
     <input type="password" name="password" value="${user.password}"/>
-    <input type="text" name="photo" value="${user.photo}"/>
+    <input type="file" name="photo" value="${user.photo}"/>
     <input type="submit" value="Save"/>
 </form>
 </body>

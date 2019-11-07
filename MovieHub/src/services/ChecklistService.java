@@ -20,11 +20,19 @@ public class ChecklistService {
         return checklistDAO.getAllById(id);
     }
 
-    public List<Film> getFilms(String checklist_name, int user_id) {
-        return filmDAO.getFilms(checklist_name, user_id);
+    public List<Film> getFilms(int checklist_id) {
+        return filmDAO.getFilms(checklist_id);
     }
 
     public void addFilm(String checklist, int user_id, int film_id) {
         checklistDAO.insertFilm(checklist, user_id, film_id);
+    }
+
+    public void removeFilm(String checklist, int user_id, int film_id) {
+        checklistDAO.deleteFilm(checklist, user_id, film_id);
+    }
+
+    public Checklist getChecklistById(int checklist_id) {
+        return checklistDAO.getById(checklist_id);
     }
 }

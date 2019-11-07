@@ -9,15 +9,15 @@ public class StarService {
 
     StarDAO starDAO = new StarDAO();
 
-    public Actor getActor(String name) {
-        return starDAO.getActorByName(name);
+    public Actor getActor(int id) {
+        return starDAO.getActorById(id);
     }
 
-    public Producer getProducer(String name) {
-        return starDAO.getProducerByName(name);
+    public Producer getProducer(int id) {
+        return starDAO.getProducerById(id);
     }
 
-    public Scriptwriter getScriptwriter(String name) {
-        return starDAO.getScriptwriterByName(name);
+    public Scriptwriter getScriptwriter(int id) {
+        return starDAO.getScriptwriterById(id);
     }
 }

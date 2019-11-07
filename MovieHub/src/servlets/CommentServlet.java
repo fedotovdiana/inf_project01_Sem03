@@ -23,7 +23,7 @@ public class CommentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = (String)request.getSession().getAttribute("user");
         User user = userService.getUser(login);
-        int film_id = filmService.getFilm(request.getParameter("film_name")).getId();
+        int film_id = Integer.parseInt(request.getParameter("film_id"));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd.MM.yy");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         filmService.addComment(user.getName(),

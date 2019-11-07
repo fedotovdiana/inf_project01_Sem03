@@ -11,7 +11,9 @@
         <tr>
             <td>
                 <form action="http://localhost:8080/film" method="get">
-                    <input type="submit" name="name" value="${f.name}"/></form>
+                    <input hidden name="film_id" value="${f.id}">
+                    <input type="submit" name="name" value="${f.name}"/>
+                </form>
             </td>
             <td>${f.country}</td>
             <td>${f.date}</td>

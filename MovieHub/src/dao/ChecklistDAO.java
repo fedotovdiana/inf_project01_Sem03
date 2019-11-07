@@ -14,9 +14,11 @@ public class ChecklistDAO implements DAO<Checklist> {
 
     //language=SQL
     private String SQL_INSERT = "INSERT INTO checklists (name, user_id) VALUES (?, ?)";
+ //   private String SQL_DELETE ="DELETE * FROM checklist_film WHERE "
     private String SQL_GET_ALL_BY_ID = "SELECT * FROM checklists WHERE user_id = ?";
     private String SQL_GET_ALL = "SELECT * FROM checklists";
     private String SQL_INSERT_IN = "INSERT INTO checklist_film (checklist_id, film_id) VALUES ((SELECT checklist_id FROM checklists WHERE user_id = ? AND name = ?), ?);";
+    private String SQL_GET_BY_ID = "SELECT * FROM checklists WHERE checklist_id = ?";
 
     private Connection connection;
 
@@ -46,7 +48,19 @@ public class ChecklistDAO implements DAO<Checklist> {
 
     @Override
     public Checklist getById(int id) {
-        return null;
+        Checklist checklist = null;
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_GET_BY_ID);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                checklist = new Checklist(id, rs.getString("name"), rs.getInt("user_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return checklist;
     }
 
     @Override
@@ -67,9 +81,9 @@ public class ChecklistDAO implements DAO<Checklist> {
             st = connection.prepareStatement(SQL_GET_ALL);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Checklist user = new Checklist(rs.getInt("checklist_id"), rs.getString("name"),
+                Checklist checklist = new Checklist(rs.getInt("checklist_id"), rs.getString("name"),
                         rs.getInt("user_id"));
-                checklists.add(user);
+                checklists.add(checklist);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,8 +99,8 @@ public class ChecklistDAO implements DAO<Checklist> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Checklist user = new Checklist(rs.getInt("checklist_id"), rs.getString("name"), id);
-                checklists.add(user);
+                Checklist checklist = new Checklist(rs.getInt("checklist_id"), rs.getString("name"), id);
+                checklists.add(checklist);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,6 +109,19 @@ public class ChecklistDAO implements DAO<Checklist> {
     }
 
     public void insertFilm(String checklist, int user_id, int film_id) {
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_INSERT_IN);
+            st.setInt(1, user_id);
+            st.setString(2, checklist);
+            st.setInt(3, film_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteFilm(String checklist, int user_id, int film_id) {
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_INSERT_IN);

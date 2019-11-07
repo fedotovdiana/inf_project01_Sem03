@@ -38,10 +38,12 @@ public class SignUpServlet extends HttpServlet {
         String fullpath = pathDir + File.separator + filename;
         p.write(fullpath);
         String photo = "" + localdir + "/" + filename;
+        //вообще дб проверка аджакс мб
         if (userService.find(login, password)) {
-            session.setAttribute("user", login);
-            response.sendRedirect("/films");
+            response.sendRedirect("/sing_in");
         } else {
+            Cookie cookie = new Cookie("user", login);
+            response.addCookie(cookie);
             userService.register(name, login, password, photo);
             session.setAttribute("user", login);
             response.sendRedirect("/films");

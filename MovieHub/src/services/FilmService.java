@@ -14,28 +14,28 @@ public class FilmService {
         return filmDAO.getAll();
     }
 
-    public Film getFilm(String name) {
-        return filmDAO.getByName(name);
+    public Film getFilm(int id) {
+        return filmDAO.getById(id);
     }
 
-    public List<Actor> getActors(Film film) {
-        return filmDAO.getActors(film);
+    public List<Actor> getActors(int film_id) {
+        return filmDAO.getActors(film_id);
     }
 
-    public List<Producer> getProducers(Film film) {
-        return filmDAO.getProducers(film);
+    public List<Producer> getProducers(int film_id) {
+        return filmDAO.getProducers(film_id);
     }
 
-    public List<Scriptwriter> getScriptwriters(Film film) {
-        return filmDAO.getScriptwriters(film);
+    public List<Scriptwriter> getScriptwriters(int film_id) {
+        return filmDAO.getScriptwriters(film_id);
     }
 
-    public List<Category> getCategories(Film film) {
-        return filmDAO.getCategories(film);
+    public List<Category> getCategories(int film_id) {
+        return filmDAO.getCategories(film_id);
     }
 
-    public List<Comment> getComments(Film film) {
-        return filmDAO.getComments(film);
+    public List<Comment> getComments(int film_id) {
+        return filmDAO.getComments(film_id);
     }
 
     public void addComment(String user, String text, Timestamp timestamp, int film_id) {

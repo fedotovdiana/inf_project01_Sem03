@@ -1,6 +1,7 @@
 package servlets;
 
 import helpers.Helper;
+import models.Checklist;
 import models.Film;
 import services.ChecklistService;
 import services.UserService;
@@ -26,12 +27,12 @@ public class ChecklistServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String checklist_name = request.getParameter("checklist");
-        String login = (String) request.getSession().getAttribute("user");
-        int user_id = userService.getUser(login).getId();
-        List<Film> films = checklistService.getFilms(checklist_name, user_id);
+        int checklist_id = Integer.parseInt(request.getParameter("checklist_id"));
+        Checklist checklist = checklistService.getChecklistById(checklist_id);
+        List<Film> films = checklistService.getFilms(checklist_id);
         Map<String, Object> root = new HashMap<>();
         root.put("films", films);
+        root.put("checklist", checklist);
         Helper.render(request, response, "checklist.ftl", root);
     }
 }

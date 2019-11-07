@@ -14,9 +14,9 @@ import java.util.List;
 public class StarDAO implements DAO<Actor> {
 
     //language=SQL
-    private String SQL_SELECT_ACTOR = "SELECT * FROM actors WHERE name = ?";
-    private String SQL_SELECT_SCRIPTWRITER = "SELECT * FROM scriptwriters WHERE name = ?";
-    private String SQL_SELECT_PRODUCER = "SELECT * FROM producers WHERE name = ?";
+    private String SQL_SELECT_ACTOR = "SELECT * FROM actors WHERE id = ?";
+    private String SQL_SELECT_SCRIPTWRITER = "SELECT * FROM scriptwriters WHERE id = ?";
+    private String SQL_SELECT_PRODUCER = "SELECT * FROM producers WHERE id = ?";
 
     private Connection connection;
 
@@ -53,15 +53,15 @@ public class StarDAO implements DAO<Actor> {
         return null;
     }
 
-    public Actor getActorByName(String name) {
+    public Actor getActorById(int id) {
         Actor actor = null;
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_SELECT_ACTOR);
-            st.setString(1, name);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                actor = new Actor(rs.getInt("id"), name, rs.getString("country"),
+                actor = new Actor(id, rs.getString("name"), rs.getString("country"),
                         rs.getString("birthday"), rs.getString("photo"));
             }
         } catch (SQLException e) {
@@ -70,15 +70,15 @@ public class StarDAO implements DAO<Actor> {
         return actor;
     }
 
-    public Producer getProducerByName(String name) {
+    public Producer getProducerById(int id) {
         Producer producer = null;
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_SELECT_PRODUCER);
-            st.setString(1, name);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                producer = new Producer(rs.getInt("id"), name, rs.getString("country"),
+                producer = new Producer(id, rs.getString("name"), rs.getString("country"),
                         rs.getString("birthday"), rs.getString("photo"));
             }
         } catch (SQLException e) {
@@ -87,15 +87,15 @@ public class StarDAO implements DAO<Actor> {
         return producer;
     }
 
-    public Scriptwriter getScriptwriterByName(String name) {
+    public Scriptwriter getScriptwriterById(int id) {
         Scriptwriter scriptwriter = null;
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_SELECT_SCRIPTWRITER);
-            st.setString(1, name);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                scriptwriter = new Scriptwriter(rs.getInt("id"), name, rs.getString("country"),
+                scriptwriter = new Scriptwriter(id, rs.getString("name"), rs.getString("country"),
                         rs.getString("birthday"), rs.getString("photo"));
             }
         } catch (SQLException e) {

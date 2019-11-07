@@ -1,5 +1,6 @@
 package servlets;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import helpers.Helper;
 import models.*;
 import services.ChecklistService;
@@ -25,25 +26,29 @@ public class FilmServlet extends HttpServlet {
     private ChecklistService checklistService = new ChecklistService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Film film = filmService.getFilm(request.getParameter("name"));
+        //по айди getfilm
+        //Film film = filmService.getFilm(request.getParameter("name"));
         String login = (String) request.getSession().getAttribute("user");
         User user = userService.getUser(login);
-        checklistService.addFilm(request.getParameter("input"), user.getId(), film.getId());
+        int film_id = Integer.parseInt(request.getParameter("film_id"));
+        checklistService.addFilm(request.getParameter("input"), user.getId(), film_id);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        Film film = filmService.getFilm(name);
-        List<Actor> actors = filmService.getActors(film);
-        List<Producer> producers = filmService.getProducers(film);
-        List<Scriptwriter> scriptwriters = filmService.getScriptwriters(film);
-        List<Category> categories = filmService.getCategories(film);
-        List<Comment> comments = filmService.getComments(film);
+        int film_id = Integer.parseInt(request.getParameter("film_id"));
+        System.out.println(film_id);
+        Film film = filmService.getFilm(film_id);
+        List<Actor> actors = filmService.getActors(film_id);
+        List<Producer> producers = filmService.getProducers(film_id);
+        List<Scriptwriter> scriptwriters = filmService.getScriptwriters(film_id);
+        List<Category> categories = filmService.getCategories(film_id);
+        List<Comment> comments = filmService.getComments(film_id);
         List<Checklist> checklists = new ArrayList<>();
         String login = (String) request.getSession().getAttribute("user");
         if (login != null) {
+            //по айди? и сессию переделать
             User user = userService.getUser(login);
-            checklists= checklistService.getAllByID(user.getId());
+            checklists = checklistService.getAllByID(user.getId());
         }
         Map<String, Object> root = new HashMap<>();
         root.put("user", login);
