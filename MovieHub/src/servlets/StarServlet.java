@@ -26,6 +26,7 @@ public class StarServlet extends HttpServlet {
         Map<String, Object> root = new HashMap<>();
         if (request.getParameter("producer_id") != null) {
             int id = Integer.parseInt(request.getParameter("producer_id"));
+            System.out.println("fffffff" + id);
             root.put("star", starService.getProducer(id));
         }
         if(request.getParameter("actor_id") != null) {

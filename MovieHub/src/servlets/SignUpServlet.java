@@ -21,10 +21,12 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //TODO вынимать юзера из сессии по айди
         HttpSession session = request.getSession();
         String name = request.getParameter("name");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+
         //работа с фото
         Part p = request.getPart("photo");
         String localdir = "uploads";
@@ -38,7 +40,7 @@ public class SignUpServlet extends HttpServlet {
         String fullpath = pathDir + File.separator + filename;
         p.write(fullpath);
         String photo = "" + localdir + "/" + filename;
-        //вообще дб проверка аджакс мб
+
         if (userService.find(login, password)) {
             response.sendRedirect("/sing_in");
         } else {
@@ -61,5 +63,4 @@ public class SignUpServlet extends HttpServlet {
             Helper.render(request, response, "sign_up.ftl", null);
         }
     }
-
 }

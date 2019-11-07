@@ -24,5 +24,14 @@
 <form action="http://localhost:8080/profile" method="get">
     <input type="submit" value="Profile"/>
 </form>
+<form action="http://localhost:8080/actors" method="get">
+    <input type="submit" value="Actors"/>
+</form>
+<form action="http://localhost:8080/producers" method="get">
+    <input type="submit" value="Producers"/>
+</form>
+<form action="http://localhost:8080/scriptwriters" method="get">
+    <input type="submit" value="Scriptwriters"/>
+</form>
 </body>
 </html>

@@ -25,8 +25,8 @@ public class FilmsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Object> root = new HashMap<>();
         List<Film> films = filmService.getAllFilms();
+        Map<String, Object> root = new HashMap<>();
         root.put("films", films);
         Helper.render(request, response, "films.ftl", root);
     }

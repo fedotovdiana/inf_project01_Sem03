@@ -13,10 +13,11 @@ import java.io.IOException;
 public class SignInServlet extends HttpServlet {
 
     private UserService userService = new UserService();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       HttpSession session = request.getSession();
-        String user = (String)session.getAttribute("user");
+        HttpSession session = request.getSession();
+        String user = (String) session.getAttribute("user");
         //если есть в сессии, редирект к фильмам
         if (user != null) {
             response.sendRedirect("/films");
@@ -37,16 +38,16 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
-        if(cookies !=null) {
-            for(Cookie c: cookies) {
-                if("user".equals(c.getName())) {
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if ("user".equals(c.getName())) {
                     System.out.println(c.getValue());
                     break;
                 }
             }
         }
         HttpSession session = request.getSession();
-        String user = (String)session.getAttribute("user");
+        String user = (String) session.getAttribute("user");
         //если есть в сессии, редирект к фильмам
         if (user != null) {
             response.sendRedirect("/films");

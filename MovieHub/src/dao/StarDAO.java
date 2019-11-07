@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class StarDAO implements DAO<Actor> {
 
@@ -17,6 +19,9 @@ public class StarDAO implements DAO<Actor> {
     private String SQL_SELECT_ACTOR = "SELECT * FROM actors WHERE id = ?";
     private String SQL_SELECT_SCRIPTWRITER = "SELECT * FROM scriptwriters WHERE id = ?";
     private String SQL_SELECT_PRODUCER = "SELECT * FROM producers WHERE id = ?";
+    private String SQL_SELECT_ALL_ACTORS = "SELECT * FROM actors";
+    private String SQL_SELECT_ALL_PRODUCERS = "SELECT * FROM producers";
+    private String SQL_SELECT_ALL_SCRIPTWRITERS = "SELECT * FROM scriptwriters";
 
     private Connection connection;
 
@@ -102,5 +107,56 @@ public class StarDAO implements DAO<Actor> {
             e.printStackTrace();
         }
         return scriptwriter;
+    }
+
+    public List<Actor> getAllActors() {
+        List<Actor> actors = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_ALL_ACTORS);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Actor actor = new Actor(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("country"),
+                        rs.getString("birthday"), rs.getString("photo"));
+                actors.add(actor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return actors;
+    }
+
+    public List<Producer> getAllProducers() {
+        List<Producer> producers = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_ALL_PRODUCERS);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Producer producer = new Producer(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("country"),
+                        rs.getString("birthday"), rs.getString("photo"));
+                producers.add(producer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return producers;
+    }
+
+    public List<Scriptwriter> getAllScriptwriters() {
+        List<Scriptwriter> scriptwriters = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_ALL_SCRIPTWRITERS);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Scriptwriter scriptwriter = new Scriptwriter(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("country"),
+                        rs.getString("birthday"), rs.getString("photo"));
+                scriptwriters.add(scriptwriter);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return scriptwriters;
     }
 }
