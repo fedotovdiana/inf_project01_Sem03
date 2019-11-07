@@ -17,8 +17,12 @@ import java.util.Map;
 @WebServlet(name = "FilmsServlet")
 public class FilmsServlet extends HttpServlet {
 
-    private FilmService filmService = new FilmService();
+    private FilmService filmService;
 
+    @Override
+    public void init() throws ServletException {
+        filmService = new FilmService();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -4,6 +4,7 @@ import helpers.Helper;
 import models.Checklist;
 import models.Film;
 import services.ChecklistService;
+import services.StarService;
 import services.UserService;
 
 import javax.servlet.ServletException;
@@ -19,8 +20,14 @@ import java.util.Map;
 @WebServlet(name = "ChecklistServlet")
 public class ChecklistServlet extends HttpServlet {
 
-    ChecklistService checklistService = new ChecklistService();
-    UserService userService = new UserService();
+    ChecklistService checklistService;
+    UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        checklistService = new ChecklistService();
+        userService = new UserService();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

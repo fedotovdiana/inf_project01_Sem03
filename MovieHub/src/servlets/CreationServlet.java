@@ -14,8 +14,14 @@ import java.io.IOException;
 @WebServlet(name = "CreationServlet")
 public class CreationServlet extends HttpServlet {
 
-    private UserService userService = new UserService();
-    private ChecklistService checklistService = new ChecklistService();
+    private UserService userService;
+    private ChecklistService checklistService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = new UserService();
+        checklistService = new ChecklistService();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = (String)request.getSession().getAttribute("user");

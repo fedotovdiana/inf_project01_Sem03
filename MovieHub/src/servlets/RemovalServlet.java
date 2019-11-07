@@ -13,8 +13,14 @@ import java.io.IOException;
 @WebServlet(name = "RemovalServlet")
 public class RemovalServlet extends HttpServlet {
 
-    UserService userService = new UserService();
-    ChecklistService checklistService = new ChecklistService();
+    UserService userService;
+    ChecklistService checklistService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = new UserService();
+        checklistService = new ChecklistService();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("ffffffffff");

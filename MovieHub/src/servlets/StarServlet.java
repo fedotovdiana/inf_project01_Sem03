@@ -15,7 +15,12 @@ import java.util.Map;
 @WebServlet(name = "StarServlet")
 public class StarServlet extends HttpServlet {
 
-    StarService starService = new StarService();
+    StarService starService;
+
+    @Override
+    public void init() throws ServletException {
+        starService = new StarService();
+    }
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

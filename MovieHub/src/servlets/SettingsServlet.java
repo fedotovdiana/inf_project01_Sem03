@@ -19,7 +19,12 @@ import java.util.Map;
 @MultipartConfig
 public class SettingsServlet extends HttpServlet {
 
-    UserService userService = new UserService();
+    UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = new UserService();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //достать все параметры юзера и обновить их с юзерсервис - юзердао

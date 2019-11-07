@@ -17,11 +17,17 @@ import java.text.SimpleDateFormat;
 @WebServlet(name = "CommentServlet")
 public class CommentServlet extends HttpServlet {
 
-    private UserService userService = new UserService();
-    private FilmService filmService = new FilmService();
+    private UserService userService;
+    private FilmService filmService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = new UserService();
+        filmService = new FilmService();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = (String)request.getSession().getAttribute("user");
+        String login = (String) request.getSession().getAttribute("user");
         User user = userService.getUser(login);
         int film_id = Integer.parseInt(request.getParameter("film_id"));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd.MM.yy");

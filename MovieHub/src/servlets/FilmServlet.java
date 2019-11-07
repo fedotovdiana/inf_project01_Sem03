@@ -21,9 +21,16 @@ import java.util.Map;
 @WebServlet(name = "FilmServlet")
 public class FilmServlet extends HttpServlet {
 
-    private FilmService filmService = new FilmService();
-    private UserService userService = new UserService();
-    private ChecklistService checklistService = new ChecklistService();
+    private FilmService filmService;
+    private UserService userService;
+    private ChecklistService checklistService;
+
+    @Override
+    public void init() throws ServletException {
+        filmService = new FilmService();
+        userService = new UserService();
+        checklistService = new ChecklistService();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //по айди getfilm

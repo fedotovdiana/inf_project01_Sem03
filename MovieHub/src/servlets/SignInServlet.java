@@ -12,7 +12,12 @@ import java.io.IOException;
 @WebServlet(name = "SingInServlet")
 public class SignInServlet extends HttpServlet {
 
-    private UserService userService = new UserService();
+    UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = new UserService();
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

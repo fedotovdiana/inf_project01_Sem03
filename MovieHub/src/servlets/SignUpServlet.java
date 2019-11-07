@@ -15,7 +15,12 @@ import java.io.IOException;
 @MultipartConfig
 public class SignUpServlet extends HttpServlet {
 
-    private UserService userService = new UserService();
+    UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = new UserService();
+    }
 
     @Override
     protected void doPost(
