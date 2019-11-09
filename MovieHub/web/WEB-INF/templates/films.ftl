@@ -17,21 +17,22 @@
             </td>
             <td>${f.country}</td>
             <td>${f.date}</td>
-            <td>${f.likes}</td>
         </tr>
     </#list>
 </table>
-<form action="http://localhost:8080/profile" method="get">
+<form action="/profile" method="get">
     <input type="submit" value="Profile"/>
 </form>
-<form action="http://localhost:8080/actors" method="get">
+<form action="/actors" method="get">
     <input type="submit" value="Actors"/>
 </form>
-<form action="http://localhost:8080/producers" method="get">
+<form action="/producers" method="get">
     <input type="submit" value="Producers"/>
 </form>
-<form action="http://localhost:8080/scriptwriters" method="get">
+<form action="/scriptwriters" method="get">
     <input type="submit" value="Scriptwriters"/>
 </form>
+<a href="http://localhost:8080/top" class="button">Top</a>
+<a href="http://localhost:8080/afisha" class="button">Afisha</a>
 </body>
 </html>

@@ -24,8 +24,7 @@ public class CreationServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = (String)request.getSession().getAttribute("user");
-        User user = userService.getUser(login);
+        User user = (User) request.getSession().getAttribute("user");
         checklistService.add(request.getParameter("input"), user.getId());
         request.getRequestDispatcher("/film").include(request, response);
     }

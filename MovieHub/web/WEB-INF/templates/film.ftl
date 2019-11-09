@@ -6,6 +6,10 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            <#if !(user?has_content)>
+                $('#btn_like').attr("disabled", 'disabled');
+                $('#btn_dislike').attr("disabled", 'disabled');
+            </#if>
             $('#byn_add_comment').click(function () {
                 $.ajax({
                     type: "post",
@@ -47,7 +51,35 @@
                     success: function () {
                         alert("Added in " + $('#text_new_ch').val());
                         $('#text_new_ch').val("");
-                        $('#btn_add_to').attr("disabled", 'disabled');
+                        $('#btn_add_to_new').attr("disabled", 'disabled');
+                    }
+                });
+            });
+            $('#btn_like').click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/like",
+                    data: {
+                        "film_id": "${film.id}"
+                    },
+                    success: function () {
+                        alert("You liked " + ${film.id});
+                        $('#btn_like').val(parseInt($('#btn_like').val()) + 1);
+                        $('#btn_like').attr("disabled", 'disabled');
+                    }
+                });
+            });
+            $('#btn_dislike').click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/dislike",
+                    data: {
+                        "film_id": "${film.id}"
+                    },
+                    success: function () {
+                        alert("You disliked " + ${film.name});
+                        $('#btn_dislike').val(parseInt($('#btn_dislike').val()) + 1);
+                        $('#btn_dislike').attr("disabled", 'disabled');
                     }
                 });
             });
@@ -60,10 +92,11 @@
     <tr>
         <td>${film.country}</td>
         <td>${film.date}</td>
-        <td>${film.likes}</td>
-        <td>${film.dislikes}</td>
         <td>${film.photo}</td>
         <td>${film.text}</td>
+        <#--        <#if user??></#if>-->
+        <td><input type="button" id="btn_like" value="${likes}"></td>
+        <td><input type="button" id="btn_dislike" value="${dislikes}"></td>
     </tr>
 </table>
 

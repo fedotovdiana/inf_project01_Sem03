@@ -29,16 +29,15 @@ public class ProfileServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = (String) request.getSession().getAttribute("user");
-        int user_id = userService.getUser(login).getId();
+        User user = (User) request.getSession().getAttribute("user");
+        int user_id = user.getId();
         String checklist = request.getParameter("checklist");
         checklistService.add(checklist, user_id);
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = (String) request.getSession().getAttribute("user");
-        User user = userService.getUser(login);
+        User user = (User) request.getSession().getAttribute("user");
         List<Checklist> checklists = checklistService.getAllByID(user.getId());
         Map<String, Object> root = new HashMap<>();
         root.put("user", user);

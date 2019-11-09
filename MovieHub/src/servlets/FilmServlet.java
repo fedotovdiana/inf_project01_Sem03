@@ -35,8 +35,7 @@ public class FilmServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //по айди getfilm
         //Film film = filmService.getFilm(request.getParameter("name"));
-        String login = (String) request.getSession().getAttribute("user");
-        User user = userService.getUser(login);
+        User user = (User) request.getSession().getAttribute("user");
         int film_id = Integer.parseInt(request.getParameter("film_id"));
         checklistService.addFilm(request.getParameter("input"), user.getId(), film_id);
     }
@@ -51,14 +50,15 @@ public class FilmServlet extends HttpServlet {
         List<Category> categories = filmService.getCategories(film_id);
         List<Comment> comments = filmService.getComments(film_id);
         List<Checklist> checklists = new ArrayList<>();
-        String login = (String) request.getSession().getAttribute("user");
-        if (login != null) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null) {
             //по айди? и сессию переделать
-            User user = userService.getUser(login);
             checklists = checklistService.getAllByID(user.getId());
         }
+        int likes = filmService.getLikes(film_id);
+        int dislikes = filmService.getDislikes(film_id);
         Map<String, Object> root = new HashMap<>();
-        root.put("user", login);
+        root.put("user", user);
         root.put("film", film);
         root.put("actors", actors);
         root.put("producers", producers);
@@ -66,6 +66,8 @@ public class FilmServlet extends HttpServlet {
         root.put("categories", categories);
         root.put("comments", comments);
         root.put("checklists", checklists);
+        root.put("likes", likes);
+        root.put("dislikes", dislikes);
         Helper.render(request, response, "film.ftl", root);
     }
 }

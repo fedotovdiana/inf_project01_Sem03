@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RemovalServlet")
-public class RemovalServlet extends HttpServlet {
+@WebServlet(name = "DeleteServlet")
+public class DeleteServlet extends HttpServlet {
 
     UserService userService;
     ChecklistService checklistService;
@@ -24,13 +24,11 @@ public class RemovalServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("ffffffffff");
+        System.out.println("kkkkkkkkkkkkkkkkkkk");
+        System.out.println(request.getParameter("checklist_id"));
         int checklist_id = Integer.parseInt(request.getParameter("checklist_id"));
-        int film_id = Integer.parseInt(request.getParameter("film_id"));
-//        String film_name = request.getParameter("film_name");
-        System.out.println("uuuuuu" + film_id + " " + checklist_id);
-        checklistService.removeFilm(checklist_id, film_id);
-//        request.getRequestDispatcher("profile").forward(request, response);
+        System.out.println(checklist_id);
+        checklistService.deleteChecklist(checklist_id);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

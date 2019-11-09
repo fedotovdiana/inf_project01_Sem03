@@ -28,11 +28,15 @@ public class ChecklistService {
         checklistDAO.insertFilm(checklist, user_id, film_id);
     }
 
-    public void removeFilm(String checklist, int user_id, int film_id) {
-        checklistDAO.deleteFilm(checklist, user_id, film_id);
+    public void removeFilm(int checklist_id, int film_id) {
+        checklistDAO.deleteFilm(checklist_id, film_id);
     }
 
     public Checklist getChecklistById(int checklist_id) {
         return checklistDAO.getById(checklist_id);
+    }
+
+    public void deleteChecklist(int checklist_id) {
+        checklistDAO.deleteChecklist(checklist_id);
     }
 }

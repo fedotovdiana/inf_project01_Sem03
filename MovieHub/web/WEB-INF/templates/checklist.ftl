@@ -3,15 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Checklist ${checklist.name}</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delete').click(function () {
+                var name = $(this).attr('name');
+                $.ajax({
+                    type: "post",
+                    url: "/removal",
+                    data: {
+                        "film_id": name,
+                        "checklist_id": ${checklist.id_checklist}
+                    },
+                    success: function () {
+                        $('#' + name).fadeOut();
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 <p>Films</p>
 <#if films?has_content>
 <table border="1">
     <#list films as f>
-        <tr>
+        <tr id="${f.id}">
             <td>
-                <form action="http://localhost:8080/film" method="get">
+                <form action="/film" method="get">
                     <input hidden name="film_id" value="${f.id}"/>
                     <input type="submit" id="name" name="film_name" value="${f.name}"/>
                 </form>
@@ -20,11 +39,7 @@
             <td>${f.date}</td>
             <td>${f.likes}</td>
             <td>
-                <form action="http://localhost:8080/removal" method="post">
-                    <input hidden name="film_id" value="${f.id}"/>
-                    <input hidden name="checklist" value="${checklist.id_checklist}"/>
-                    <input type="submit" value="Delete"/>
-                </form>
+                <input type="submit" class="delete" name="${f.id}" value="Delete"/>
             </td>
         </tr>
     </#list>
@@ -32,23 +47,3 @@
 </table>
 </body>
 </html>
-
-<#--    <script>
-          // $(document).ready(function () {
-          //     $('#btn_remove').click(function () {
-                  // alert("" + $('#name').val() + "was removed");
-                  // alert("sssssssss")
-                  // $.ajax({
-                  //     type: "post",
-                  //     url: "/removal",
-                  //     data: {
-                  //         "film_id": $('#id').val()
-                  //     },
-                  //     success: function () {
-                  //         alert("" + $('#name').val() + "was removed");
-                  //         $(('#id').val()).hide();
-                  //     }
-                  // });
-          //     });
-          // });
-     </script> -->

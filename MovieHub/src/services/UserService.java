@@ -19,6 +19,10 @@ public class UserService {
         return userDAO.getUserByLogin(login);
     }
 
+    public User getUser(int id) {
+        return userDAO.getById(id);
+    }
+
     public void update(int id, String name, String login, String password, String photo) {
         userDAO.update(id, name, login, password, photo);
     }

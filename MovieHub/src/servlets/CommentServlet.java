@@ -27,8 +27,9 @@ public class CommentServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = (String) request.getSession().getAttribute("user");
-        User user = userService.getUser(login);
+//        String login = (String) request.getSession().getAttribute("user");
+//        User user = userService.getUser(login);
+        User user = (User) request.getSession().getAttribute("user");
         int film_id = Integer.parseInt(request.getParameter("film_id"));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd.MM.yy");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());

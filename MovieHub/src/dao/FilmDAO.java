@@ -23,6 +23,12 @@ public class FilmDAO implements DAO<Film> {
     private String SQL_SELECT_FILMS = "SELECT * FROM films WHERE id IN (SELECT film_id FROM checklist_film WHERE checklist_id = ?)";
     private String SQL_SELECT_COMMENTS = "SELECT * FROM comments WHERE film_id = ?";
     private String SQL_INSERT_COMMENT = "INSERT INTO comments (user_name, text, date, film_id) VALUES (?, ?, ?, ?)";
+    private String SQL_LIKES = "SELECT COUNT(*) FROM likes WHERE film_id = ?";
+    private String SQL_DISLIKES = "SELECT COUNT(*) FROM dislikes WHERE film_id = ?";
+    private String SQL_ADD_LIKE = "INSERT INTO likes VALUES (?, ?)";
+    private String SQL_ADD_DISLIKE = "INSERT INTO dislikes VALUES (?, ?)";
+    private String SQL_SELECT_AFISHA = "SELECT * FROM films WHERE DATE(date) > current_timestamp";
+    private String SQL_SELECT_TOP = "SELECT * FROM films ORDER BY (SELECT COUNT(*) FROM likes WHERE film_id = films.id) DESC LIMIT 3";
 
     private Connection connection;
 
@@ -48,7 +54,7 @@ public class FilmDAO implements DAO<Film> {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 film = new Film(id, rs.getString("name"), rs.getString("country"),
-                        rs.getString("date"), rs.getInt("likes"), rs.getInt("dislikes"),
+                        rs.getString("date"),
                         rs.getString("photo"), rs.getString("text"));
             }
         } catch (SQLException e) {
@@ -75,8 +81,8 @@ public class FilmDAO implements DAO<Film> {
             st = connection.prepareStatement(SQL_GET_ALL);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Film film = new Film(rs.getInt("id"), rs.getString("name"), rs.getString("country"),
-                        rs.getString("date"), rs.getInt("likes"), rs.getInt("dislikes"),
+                String date = new SimpleDateFormat("dd.MM.YYYY").format(rs.getTimestamp("date"));
+                Film film = new Film(rs.getInt("id"), rs.getString("name"), rs.getString("country"), date,
                         rs.getString("photo"), rs.getString("text"));
                 films.add(film);
             }
@@ -95,7 +101,7 @@ public class FilmDAO implements DAO<Film> {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 film = new Film(rs.getInt("id"), name, rs.getString("country"),
-                        rs.getString("date"), rs.getInt("likes"), rs.getInt("dislikes"),
+                        rs.getString("date"),
                         rs.getString("photo"), rs.getString("text"));
             }
         } catch (SQLException e) {
@@ -183,13 +189,11 @@ public class FilmDAO implements DAO<Film> {
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_SELECT_FILMS);
-            System.out.println(checklist_id);
             st.setInt(1, checklist_id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Film film = new Film(rs.getInt("id"), rs.getString("name"), rs.getString("country"),
-                        rs.getString("date"), rs.getInt("likes"), rs.getInt("dislikes"),
-                        rs.getString("photo"), rs.getString("text"));
+                        rs.getString("date"), rs.getString("photo"), rs.getString("text"));
 
                 films.add(film);
             }
@@ -233,4 +237,96 @@ public class FilmDAO implements DAO<Film> {
         }
     }
 
+    public int getLikes(int film_id) {
+        int likes = 0;
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_LIKES);
+            st.setInt(1, film_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                likes = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(likes);
+        return likes;
+    }
+
+    public int getDislikes(int film_id) {
+        int dislikes = 0;
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_DISLIKES);
+            st.setInt(1, film_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                dislikes = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dislikes;
+    }
+
+    public void addLike(int user_id, int film_id) {
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_ADD_LIKE);
+            st.setInt(1, user_id);
+            st.setInt(2, film_id);
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addDislike(int user_id, int film_id) {
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_ADD_DISLIKE);
+            st.setInt(1, user_id);
+            st.setInt(2, film_id);
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Film> getTopFilms() {
+        List<Film> films = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_TOP);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String date = new SimpleDateFormat("dd.MM.YYYY").format(rs.getTimestamp("date"));
+                Film film = new Film(rs.getInt("id"), rs.getString("name"), rs.getString("country"), date,
+                        rs.getString("photo"), rs.getString("text"));
+                films.add(film);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return films;
+    }
+
+    public List<Film> getAfishaFilms() {
+        List<Film> films = new ArrayList<>();
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_SELECT_AFISHA);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String date = new SimpleDateFormat("dd.MM.YYYY").format(rs.getTimestamp("date"));
+                Film film = new Film(rs.getInt("id"), rs.getString("name"), rs.getString("country"), date,
+                        rs.getString("photo"), rs.getString("text"));
+                films.add(film);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return films;
+    }
 }

@@ -10,8 +10,8 @@
     <#list scriptwriters as s>
         <tr>
             <td>
-                <form action="http://localhost:8080/film" method="get">
-                    <input hidden name="scriptwriter_id" value="${s.id}">
+                <form action="http://localhost:8080/star" method="get">
+                    <input hidden name="scr_id" value="${s.id}">
                     <input type="submit" name="name" value="${s.name}"/>
                 </form>
             </td>

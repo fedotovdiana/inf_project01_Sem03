@@ -41,4 +41,28 @@ public class FilmService {
     public void addComment(String user, String text, Timestamp timestamp, int film_id) {
         filmDAO.addComment(user, text, timestamp, film_id);
     }
+
+    public int getLikes(int film_id) {
+        return filmDAO.getLikes(film_id);
+    }
+
+    public int getDislikes(int film_id) {
+        return filmDAO.getDislikes(film_id);
+    }
+
+    public void addLike(int user_id, int film_id) {
+        filmDAO.addLike(user_id, film_id);
+    }
+
+    public void addDislike(int user_id, int film_id) {
+        filmDAO.addDislike(user_id, film_id);
+    }
+
+    public List<Film> getTopFilms() {
+        return filmDAO.getTopFilms();
+    }
+
+    public List<Film> getAfishaFilms() {
+        return filmDAO.getAfishaFilms();
+    }
 }

@@ -1,6 +1,7 @@
 package servlets;
 
 import helpers.Helper;
+import models.User;
 import services.UserService;
 
 import javax.servlet.ServletException;
@@ -26,7 +27,6 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //TODO вынимать юзера из сессии по айди
         HttpSession session = request.getSession();
         String name = request.getParameter("name");
         String login = request.getParameter("login");
@@ -49,10 +49,11 @@ public class SignUpServlet extends HttpServlet {
         if (userService.find(login, password)) {
             response.sendRedirect("/sing_in");
         } else {
-            Cookie cookie = new Cookie("user", login);
-            response.addCookie(cookie);
+//            Cookie cookie = new Cookie("user", login);
+//            response.addCookie(cookie);
             userService.register(name, login, password, photo);
-            session.setAttribute("user", login);
+            User user = userService.getUser(login);
+            session.setAttribute("user", user);
             response.sendRedirect("/films");
         }
     }
@@ -61,7 +62,7 @@ public class SignUpServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String user = (String) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         if (user != null) {
             response.sendRedirect("/films");
         } else {

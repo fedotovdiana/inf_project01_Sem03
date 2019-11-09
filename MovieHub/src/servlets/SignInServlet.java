@@ -1,6 +1,7 @@
 package servlets;
 
 import helpers.Helper;
+import models.User;
 import services.UserService;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,8 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String user = (String) session.getAttribute("user");
+        //TODO
+        User user = (User) session.getAttribute("user");
         //если есть в сессии, редирект к фильмам
         if (user != null) {
             response.sendRedirect("/films");
@@ -31,7 +33,8 @@ public class SignInServlet extends HttpServlet {
             String password = request.getParameter("password");
             //если нет, но уже зарегистрирован, добавляем в сессию
             if (userService.find(login, password)) {
-                session.setAttribute("user", login);
+                User n_user = userService.getUser(login);
+                session.setAttribute("user", n_user);
                 response.sendRedirect("/films");
                 //если не зарегистрирован
             } else {
@@ -42,17 +45,17 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                if ("user".equals(c.getName())) {
-                    System.out.println(c.getValue());
-                    break;
-                }
-            }
-        }
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null) {
+//            for (Cookie c : cookies) {
+//                if ("user".equals(c.getName())) {
+//                    System.out.println(c.getValue());
+//                    break;
+//                }
+//            }
+//        }
         HttpSession session = request.getSession();
-        String user = (String) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         //если есть в сессии, редирект к фильмам
         if (user != null) {
             response.sendRedirect("/films");

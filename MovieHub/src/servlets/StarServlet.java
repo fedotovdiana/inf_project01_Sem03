@@ -22,7 +22,6 @@ public class StarServlet extends HttpServlet {
         starService = new StarService();
     }
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

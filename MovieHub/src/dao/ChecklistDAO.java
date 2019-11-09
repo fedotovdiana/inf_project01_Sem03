@@ -14,11 +14,12 @@ public class ChecklistDAO implements DAO<Checklist> {
 
     //language=SQL
     private String SQL_INSERT = "INSERT INTO checklists (name, user_id) VALUES (?, ?)";
- //   private String SQL_DELETE ="DELETE * FROM checklist_film WHERE "
+    private String SQL_DELETE_FILM ="DELETE FROM checklist_film WHERE checklist_id = ? AND film_id = ?";
     private String SQL_GET_ALL_BY_ID = "SELECT * FROM checklists WHERE user_id = ?";
     private String SQL_GET_ALL = "SELECT * FROM checklists";
     private String SQL_INSERT_IN = "INSERT INTO checklist_film (checklist_id, film_id) VALUES ((SELECT checklist_id FROM checklists WHERE user_id = ? AND name = ?), ?);";
     private String SQL_GET_BY_ID = "SELECT * FROM checklists WHERE checklist_id = ?";
+    private String SQL_DELETE_CH = "DELETE FROM checklists WHERE checklist_id = ?";
 
     private Connection connection;
 
@@ -121,13 +122,23 @@ public class ChecklistDAO implements DAO<Checklist> {
         }
     }
 
-    public void deleteFilm(String checklist, int user_id, int film_id) {
+    public void deleteFilm(int checklist_id, int film_id) {
         PreparedStatement st = null;
         try {
-            st = connection.prepareStatement(SQL_INSERT_IN);
-            st.setInt(1, user_id);
-            st.setString(2, checklist);
-            st.setInt(3, film_id);
+            st = connection.prepareStatement(SQL_DELETE_FILM);
+            st.setInt(1, checklist_id);
+            st.setInt(2, film_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteChecklist(int checklist_id) {
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(SQL_DELETE_CH);
+            st.setInt(1, checklist_id);
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
