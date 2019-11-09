@@ -1,0 +1,197 @@
+<!--Страница фильма-->
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+    <title>Film</title>
+</head>
+<body class="photo">
+<div class="header d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm ">
+    <h1 class=" my-0 mr-md-auto font-weight-normal">КиноЛист</h1>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2" href="afisha.html">Киноафиша</a>
+        <a class="p-2" href="films.html">Фильмы</a>
+        <a class="p-2" href="top.html">Топ</a>
+        <a class="p-2" href="actors.html">Актеры</a>
+        <a class="p-2" href="producers.html">Режиссеры</a>
+        <a class="p-2" href="scriptwriters.html">Сценаристы</a>
+    </nav>
+    <a href="profile.html"> <img src="../svg/person.svg" class="icon" alt="person"></a>
+</div>
+
+<div class="container film">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="name">Разлом</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <img src="../img/f1.jpg" alt="..." class="img-thumbnail ">
+            <div class="input-group">
+                //Выбор чек-листа
+                <select class="custom-select" id="inputGroupSelect04">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+                <button type="button" class="btn btn-primary btn-pri" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Создать новый чек-лист</button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Создание чек-листа</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Введите название чек-листа:</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                <button type="button" class="btn btn-primary">Создать</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        //для октрытия модального окна
+        <script>
+            $('#exampleModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('whatever') // Extract info from data-* attributes
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-title').text('New message to ' + recipient)
+                modal.find('.modal-body input').val(recipient)
+            })
+        </script>
+        <div class="col-9">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th scope="row">Год:</th>
+                    <td>2019</td>
+                </tr>
+                <tr>
+                    <th scope="row">Страна:</th>
+                    <td>Россия</td>
+                </tr>
+                <tr>
+                    <th scope="row">Жанры:</th>
+                    <td>триллер, боевик</td>
+                </tr>
+                <tr>
+                    <th scope="row">Режиссер:</th>
+                    <td>Вдовинов Даниил</td>
+                </tr>
+                <tr>
+                    <th scope="row">Сценаристы:</th>
+                    <td>Еланская Ангелина</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <h2 class="text-center">Актеры</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-2">
+                <a href="#"><img src="../img/alina.png" class="img-thumbnail" alt="..."></a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <a href="#"><img src="../img/my_photo.jpg" class="img-thumbnail" alt="..."></a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <a href="#"><img src="../img/alina.png" class="img-thumbnail" alt="..."></a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <a href="#"><img src="../img/my_photo.jpg" class="img-thumbnail" alt="..."></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h2> Описание </h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">Землетрясение 1904 года в Осло грозит повториться сто лет спустя, только с возросшей силой.
+                        Норвежский геолог Кристиан Айкорд, три года назад переживший цунами, снова пытается спасти свою семью. Норвежский фильм-катастрофа «Разлом» режиссера Йона Андреаса Андерсена стал продолжением успешного фильма 2015 года «Волна». К роли уставшего геолога, которому предстоит принять новый вызов стихии, вернулся звезда норвежского кино Кристоффер Йонер, лауреат национальной премии «Аманда» («Бэбиколл», «Король чертова острова», «Падающее небо»). Прошло три года с тех пор, как опытный и прозорливый геолог Кристиан Айкорд пережил разрушительное цунами и спас многих людей, включая свою семью. Но память о тех, кто погиб, внутреннее опустошение и ужас надломили Кристиана. Он отделился от бывшей жены и детей, замкнувшись в себе. Ему приходится покинуть свое добровольное затворничество накануне новой катастрофы. Узнав о загадочном несчастном случае в туннеле, Кристиан догадывается, что произошел подземный толчок – предвестник землетрясения. Это не новость для Осло – в 1904 году город уже пережил похожее бедствие, только теперь оно будет во много раз опаснее. Столкнувшись с повсеместным недоверием,
+                        Кристиан опять борется с самой природой за жизнь своих близких. Фильм-катастрофу «Разлом» можно посмотреть в нашем онлайн-кинотеатре.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+       <p></p>
+    </div>
+    <div class="row">
+        <h2>Комментарии</h2>
+    </div>
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media-block">
+                        <div class="media-body">
+                            <div class="mar-btm">
+                                <a href="#" class="btn-link text-semibold media-heading box-inline">Диана</a>
+                                <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - 19-06-2016</p>
+                            </div>
+                            <p>Очень классный фильм! СПАСИБО СЦЕНАРИСТУ!!!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <textarea class="form-control" rows="2" placeholder="Добавьте Ваш комментарий"></textarea>
+                    <div class="mar-top clearfix">
+                        <button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i> Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
