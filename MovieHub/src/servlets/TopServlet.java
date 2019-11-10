@@ -29,7 +29,6 @@ public class TopServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO getTopFilms()
         List<Film> films = filmService.getTopFilms();
         Map<String, Object> root = new HashMap<>();
         root.put("films", films);

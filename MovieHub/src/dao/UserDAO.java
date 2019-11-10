@@ -52,7 +52,7 @@ public class UserDAO implements DAO<User> {
     public User getById(int id) {
         User user = null;
         try {
-            PreparedStatement st = connection.prepareStatement(SQL_DELETE);
+            PreparedStatement st = connection.prepareStatement(SQL_FIND_USER_BY_ID);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {

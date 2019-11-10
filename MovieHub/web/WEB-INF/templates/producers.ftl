@@ -1,23 +1,40 @@
-<!DOCTYPE html>
+<#include 'header.ftl'>
+<#include 'libraries.ftl'>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../../front/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../front/css/style.css" type="text/css">
+
     <title>Producers</title>
 </head>
-<body>
-<p>Producers</p>
-<table border="1">
-    <#list producers as p>
-        <tr>
-            <td>
-                <form action="http://localhost:8080/star" method="get">
-                    <input hidden name="producer_id" value="${p.id}">
-                    <input type="submit" name="name" value="${p.name}"/>
-                </form>
-            </td>
-            <td>${p.photo}</td>
-        </tr>
-    </#list>
-</table>
+<body class="photo">
+<@header/>
+</div>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h2 class="jumbotron-heading">Producers</h2>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <#list producers as p>
+            <div class="col-md-3">
+                <div class="card mb-2">
+                    <a href="/star?producer_id=${p.id}"><img src="../../front/img/${p.photo}" class="img-thumbnail" alt="..."></a>
+                    <div class="card-body">
+                        <ul class="list-unstyled text-center mb-2">
+                            <li><a href="/star?producer_id=${p.id}" class="reg">${p.name}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </#list>
+    </div>
+</div>
+<@lib/>
 </body>
 </html>

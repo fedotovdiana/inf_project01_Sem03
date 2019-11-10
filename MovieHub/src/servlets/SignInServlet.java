@@ -23,10 +23,11 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        //TODO
         User user = (User) session.getAttribute("user");
         //если есть в сессии, редирект к фильмам
         if (user != null) {
+            System.out.println("fffffff");
+            System.out.println(user.getName());
             response.sendRedirect("/films");
         } else {
             String login = request.getParameter("login");

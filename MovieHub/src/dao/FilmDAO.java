@@ -28,7 +28,7 @@ public class FilmDAO implements DAO<Film> {
     private String SQL_ADD_LIKE = "INSERT INTO likes VALUES (?, ?)";
     private String SQL_ADD_DISLIKE = "INSERT INTO dislikes VALUES (?, ?)";
     private String SQL_SELECT_AFISHA = "SELECT * FROM films WHERE DATE(date) > current_timestamp";
-    private String SQL_SELECT_TOP = "SELECT * FROM films ORDER BY (SELECT COUNT(*) FROM likes WHERE film_id = films.id) DESC LIMIT 3";
+    private String SQL_SELECT_TOP = "SELECT * FROM films ORDER BY (SELECT COUNT(*) FROM likes WHERE film_id = films.id) DESC LIMIT 4";
 
     private Connection connection;
 
@@ -53,9 +53,9 @@ public class FilmDAO implements DAO<Film> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
+                String date = new SimpleDateFormat("dd.MM.YYYY").format(rs.getTimestamp("date"));
                 film = new Film(id, rs.getString("name"), rs.getString("country"),
-                        rs.getString("date"),
-                        rs.getString("photo"), rs.getString("text"));
+                        date, rs.getString("photo"), rs.getString("text"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

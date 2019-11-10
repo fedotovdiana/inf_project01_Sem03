@@ -27,6 +27,7 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("POOOOOOOOOST");
         HttpSession session = request.getSession();
         String name = request.getParameter("name");
         String login = request.getParameter("login");
@@ -47,7 +48,7 @@ public class SignUpServlet extends HttpServlet {
         String photo = "" + localdir + "/" + filename;
 
         if (userService.find(login, password)) {
-            response.sendRedirect("/sing_in");
+            response.sendRedirect("/profile");
         } else {
 //            Cookie cookie = new Cookie("user", login);
 //            response.addCookie(cookie);

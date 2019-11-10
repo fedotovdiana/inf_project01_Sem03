@@ -29,6 +29,8 @@ public class Helper {
         Configuration cfg = Helper.getConfig(request);
         try {
             Template tmpl = cfg.getTemplate(path);
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html");
             tmpl.process(root, response.getWriter());
 

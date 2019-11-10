@@ -24,7 +24,6 @@ public class DeleteServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("kkkkkkkkkkkkkkkkkkk");
         System.out.println(request.getParameter("checklist_id"));
         int checklist_id = Integer.parseInt(request.getParameter("checklist_id"));
         System.out.println(checklist_id);
