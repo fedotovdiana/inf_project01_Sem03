@@ -22,7 +22,7 @@
             <form class="form-horizontal form" action="http://localhost:8080/sign_in" method="post">
                 <span class="heading">Sign in</span>
                 <div class="form-group help">
-                    <input type="login" class="form-control" name="login" id="inputLogin"  placeholder="Login">
+                    <input type="login" class="form-control" name="login" id="inputLogin" required pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" placeholder="Login">
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="form-group help">
