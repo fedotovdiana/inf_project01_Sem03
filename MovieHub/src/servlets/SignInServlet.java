@@ -8,8 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
-//вход
 @WebServlet(name = "SingInServlet")
 public class SignInServlet extends HttpServlet {
 
@@ -22,46 +22,61 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        //если есть в сессии, редирект к фильмам
-        if (user != null) {
-            System.out.println("fffffff");
-            System.out.println(user.getName());
-            response.sendRedirect("/films");
-        } else {
-            String login = request.getParameter("login");
-            String password = request.getParameter("password");
-            //если нет, но уже зарегистрирован, добавляем в сессию
+        String login = request.getParameter("login");
+        String password = null;
+        try {
+            password = userService.hash(request.getParameter("password"));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        String checkbox = request.getParameter("check");
+        try {
             if (userService.find(login, password)) {
                 User n_user = userService.getUser(login);
-                session.setAttribute("user", n_user);
+                request.getSession().setAttribute("user", n_user);
+                if (checkbox != null) {
+                    Cookie cookie = new Cookie("user", login);
+                    cookie.setMaxAge(60 * 60 * 24 * 14);
+                    response.addCookie(cookie);
+                }
                 response.sendRedirect("/films");
-                //если не зарегистрирован
             } else {
                 response.sendRedirect("/sign_up");
             }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        Cookie[] cookies = request.getCookies();
-//        if (cookies != null) {
-//            for (Cookie c : cookies) {
-//                if ("user".equals(c.getName())) {
-//                    System.out.println(c.getValue());
-//                    break;
-//                }
-//            }
-//        }
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        //если есть в сессии, редирект к фильмам
-        if (user != null) {
-            response.sendRedirect("/films");
-        } else {
-            Helper.render(request, response, "sign_in.ftl", null);
-        }
+        Helper.render(request, response, "sign_in.ftl", null);
     }
 }
+
+//        HttpSession session = request.getSession();
+//        User user = (User)session.getAttribute("user");
+//        if (user != null) {
+//            response.sendRedirect("/films");
+//        } else {
+//            Cookie[] cookies = request.getCookies();
+//            Cookie cookie = null;
+//            if (cookies != null) {
+//                for (Cookie c : cookies) {
+//                    if ("user".equals(c.getName())) {
+//                        cookie = c;
+//                        System.out.println(c.getValue());
+//                        break;
+//                    }
+//                }
+//                if (cookie != null) {
+//                    User u = userService.getUser(cookie.getValue());
+//                    request.getSession().setAttribute("user", u);
+//                    response.sendRedirect("/films");
+//                } else {
+//                    Helper.render(request, response, "sign_in.ftl", null);
+//                }
+//            } else {
+//                Helper.render(request, response, "sign_in.ftl", null);
+//            }
+//        }

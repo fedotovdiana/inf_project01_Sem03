@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StarDAO implements DAO<Actor> {
+public class StarDAO {
 
     //language=SQL
     private String SQL_SELECT_ACTOR = "SELECT * FROM actors WHERE id = ?";
@@ -33,27 +33,6 @@ public class StarDAO implements DAO<Actor> {
         }
     }
 
-    @Override
-    public void insert(Actor adr) {
-
-    }
-
-    @Override
-    public Actor getById(int id) {
-        return null;
-    }
-
-    @Override
-    public void update(Actor adr) {
-
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
     public List<Actor> getAll() {
         return null;
     }

@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmDAO implements DAO<Film> {
+public class FilmDAO {
 
     //language=SQL
     private String SQL_SELECT_BY_ID = "SELECT * FROM films WHERE id = ?";
@@ -40,12 +40,6 @@ public class FilmDAO implements DAO<Film> {
         }
     }
 
-    @Override
-    public void insert(Film adr) {
-
-    }
-
-    @Override
     public Film getById(int id) {
         Film film = null;
         try {
@@ -63,17 +57,6 @@ public class FilmDAO implements DAO<Film> {
         return film;
     }
 
-    @Override
-    public void update(Film adr) {
-
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
     public List<Film> getAll() {
         List<Film> films = new ArrayList<>();
         PreparedStatement st = null;

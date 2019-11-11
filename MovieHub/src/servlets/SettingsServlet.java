@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,17 +26,20 @@ public class SettingsServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //достать все параметры юзера и обновить их с юзерсервис - юзердао
-        //TODO отдельно апдейтить?
         User current_user = (User) request.getSession().getAttribute("user");
         int id = current_user.getId();
         String name = request.getParameter("name");
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        //работа с фото
+        String password = null;
+        try {
+            password = userService.hash(request.getParameter("password"));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         Part p = request.getPart("photo");
         String photo;
-        if (p == null) {
+        if (!("".equals(p.getSubmittedFileName()))) {
             String localdir = "uploads";
             String pathDir = getServletContext().getRealPath("") + File.separator + localdir;
             File dir = new File(pathDir);
@@ -50,7 +54,12 @@ public class SettingsServlet extends HttpServlet {
         } else {
             photo = current_user.getPhoto();
         }
-        userService.update(id, name, login, password, photo);
+        try {
+            userService.update(id, name, login, password, photo);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         User user = userService.getUser(id);
         request.getSession().setAttribute("user", user);
         response.sendRedirect("/profile");

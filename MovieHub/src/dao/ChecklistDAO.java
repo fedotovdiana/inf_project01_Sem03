@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChecklistDAO implements DAO<Checklist> {
+public class ChecklistDAO {
 
     //language=SQL
     private String SQL_INSERT = "INSERT INTO checklists (name, user_id) VALUES (?, ?)";
@@ -43,11 +43,6 @@ public class ChecklistDAO implements DAO<Checklist> {
         }
     }
 
-    @Override
-    public void insert(Checklist adr) {
-    }
-
-    @Override
     public Checklist getById(int id) {
         Checklist checklist = null;
         PreparedStatement st = null;
@@ -64,17 +59,6 @@ public class ChecklistDAO implements DAO<Checklist> {
         return checklist;
     }
 
-    @Override
-    public void update(Checklist adr) {
-
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
     public List<Checklist> getAll() {
         List<Checklist> checklists = new ArrayList<>();
         PreparedStatement st = null;

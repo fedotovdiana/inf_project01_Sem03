@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 //registration
 @WebServlet(name = "SingUpServlet")
@@ -27,11 +28,14 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("POOOOOOOOOST");
-        HttpSession session = request.getSession();
         String name = request.getParameter("name");
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String password = null;
+        try {
+            password = userService.hash(request.getParameter("password"));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         //работа с фото
         Part p = request.getPart("photo");
@@ -47,27 +51,49 @@ public class SignUpServlet extends HttpServlet {
         p.write(fullpath);
         String photo = "" + localdir + "/" + filename;
 
-        if (userService.find(login, password)) {
-            response.sendRedirect("/profile");
-        } else {
-//            Cookie cookie = new Cookie("user", login);
-//            response.addCookie(cookie);
+        Cookie cookie = new Cookie("user", login);
+        cookie.setMaxAge(60 * 60 * 24 * 14);
+        response.addCookie(cookie);
+        try {
             userService.register(name, login, password, photo);
-            User user = userService.getUser(login);
-            session.setAttribute("user", user);
-            response.sendRedirect("/films");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
+        User user = userService.getUser(login);
+        request.getSession().setAttribute("user", user);
+        response.sendRedirect("/films");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            response.sendRedirect("/films");
-        } else {
-            Helper.render(request, response, "sign_up.ftl", null);
-        }
+        Helper.render(request, response, "sign_up.ftl", null);
     }
 }
+
+//    HttpSession session = request.getSession();
+//    User user = (User) session.getAttribute("user");
+//        if (user != null) {
+//                response.sendRedirect("/films");
+//                } else {
+//                Cookie[] cookies = request.getCookies();
+//                Cookie cookie = null;
+//                if (cookies != null) {
+//                for (Cookie c : cookies) {
+//                if ("user".equals(c.getName())) {
+//                cookie = c;
+//                System.out.println(c.getValue());
+//                break;
+//                }
+//                }
+//                if (cookie != null) {
+//                User u = userService.getUser(cookie.getValue());
+//                request.getSession().setAttribute("user", u);
+//                response.sendRedirect("/films"); 
+//                } else {
+//                Helper.render(request, response, "sign_up.ftl", null);
+//                }
+//                } else {
+//                Helper.render(request, response, "sign_up.ftl", null);
+//                }
+//                }

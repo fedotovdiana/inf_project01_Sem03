@@ -18,6 +18,8 @@
             <#if !(user?has_content)>
             $('#btn_like').attr("disabled", 'disabled');
             $('#btn_dislike').attr("disabled", 'disabled');
+            $('#btn_add_to_new').attr("disabled", 'disabled');
+            $('#btn_add_to').attr("disabled", 'disabled');
             </#if>
             $('#byn_add_comment').click(function () {
                 $.ajax({
@@ -285,20 +287,22 @@
             </div>
         </div>
     </#list>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel">
-                <div class="panel-body">
-                    <textarea class="form-control" id="text_comment" rows="2" placeholder="Add comment"></textarea>
-                    <div class="mar-top clearfix">
-                        <button class="btn btn-sm btn-primary pull-right" id="byn_add_comment" type="submit"><i
-                                    class="fa fa-pencil fa-fw"></i>Add
-                        </button>
+    <#if (user?has_content)>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <textarea class="form-control" id="text_comment" rows="2" placeholder="Add comment"></textarea>
+                        <div class="mar-top clearfix">
+                            <button class="btn btn-sm btn-primary pull-right" id="byn_add_comment" type="submit"><i
+                                        class="fa fa-pencil fa-fw"></i>Add
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </#if>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"

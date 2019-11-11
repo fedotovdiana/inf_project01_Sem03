@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <filter>
+        <filter-name>filter</filter-name>
+        <filter-class>filter.SignInFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>filter</filter-name>
+        <url-pattern>/settings</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/checklist</url-pattern>
+        <url-pattern>/sign_in</url-pattern>
+        <url-pattern>/sign_up</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>sign_in</servlet-name>
+        <servlet-class>servlets.SignInServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sign_in</servlet-name>
+        <url-pattern>/sign_in</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>actors</servlet-name>
+        <servlet-class>servlets.ActorsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>actors</servlet-name>
+        <url-pattern>/actors</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>afisha</servlet-name>
+        <servlet-class>servlets.AfishaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>afisha</servlet-name>
+        <url-pattern>/afisha</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>checklist</servlet-name>
+        <servlet-class>servlets.ChecklistServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checklist</servlet-name>
+        <url-pattern>/checklist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>film</servlet-name>
+        <servlet-class>servlets.FilmServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>film</servlet-name>
+        <url-pattern>/film</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>films</servlet-name>
+        <servlet-class>servlets.FilmsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>films</servlet-name>
+        <url-pattern>/films</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>producers</servlet-name>
+        <servlet-class>servlets.ProducersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>producers</servlet-name>
+        <url-pattern>/producers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>scriptwriters</servlet-name>
+        <servlet-class>servlets.ScriptwritersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>scriptwriters</servlet-name>
+        <url-pattern>/scriptwriters</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>settings</servlet-name>
+        <servlet-class>servlets.SettingsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>settings</servlet-name>
+        <url-pattern>/settings</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>sign_up</servlet-name>
+        <servlet-class>servlets.SignUpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sign_up</servlet-name>
+        <url-pattern>/sign_up</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>star</servlet-name>
+        <servlet-class>servlets.StarServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>star</servlet-name>
+        <url-pattern>/star</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>top</servlet-name>
+        <servlet-class>servlets.TopServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>top</servlet-name>
+        <url-pattern>/top</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>servlets.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>test</servlet-name>
+        <servlet-class>servlets.TestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>test</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>creation</servlet-name>
+        <servlet-class>servlets.CreationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>creation</servlet-name>
+        <url-pattern>/creation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>comment</servlet-name>
+        <servlet-class>servlets.CommentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>comment</servlet-name>
+        <url-pattern>/comment</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>removal</servlet-name>
+        <servlet-class>servlets.RemovalServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>removal</servlet-name>
+        <url-pattern>/removal</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>servlets.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>like</servlet-name>
+        <servlet-class>servlets.LikeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>like</servlet-name>
+        <url-pattern>/like</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>dislike</servlet-name>
+        <servlet-class>servlets.DislikeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dislike</servlet-name>
+        <url-pattern>/dislike</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.svg</url-pattern>
+    </servlet-mapping>
+
+</web-app>

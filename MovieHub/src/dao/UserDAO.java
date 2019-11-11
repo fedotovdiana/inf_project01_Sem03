@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO implements DAO<User> {
+public class UserDAO {
 
     //language=SQL
     private String SQL_FIND_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
@@ -28,7 +28,6 @@ public class UserDAO implements DAO<User> {
         }
     }
 
-
     public void insert(String name, String login, String password, String photo) {
         PreparedStatement st = null;
         try {
@@ -43,12 +42,6 @@ public class UserDAO implements DAO<User> {
         }
     }
 
-    @Override
-    public void insert(User adr) {
-
-    }
-
-    @Override
     public User getById(int id) {
         User user = null;
         try {
@@ -66,11 +59,6 @@ public class UserDAO implements DAO<User> {
 
     }
 
-    @Override
-    public void update(User user) {
-
-    }
-
     public void update(int id, String name, String login, String password, String photo) {
         try {
             PreparedStatement st = connection.prepareStatement(SQL_UPDATE);
@@ -85,7 +73,6 @@ public class UserDAO implements DAO<User> {
         }
     }
 
-    @Override
     public void delete(int id) {
         try {
             PreparedStatement st = connection.prepareStatement(SQL_DELETE);
@@ -97,7 +84,6 @@ public class UserDAO implements DAO<User> {
     }
 
 
-    @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         PreparedStatement st = null;
@@ -145,6 +131,4 @@ public class UserDAO implements DAO<User> {
         }
         return user;
     }
-
 }
-
