@@ -31,7 +31,6 @@ public class SearchServlet extends HttpServlet {
         String query = request.getParameter("query");
 
         List<Film> films = filmService.getByLikePattern(query);
-        System.out.println(films.size());
 
         JSONArray ja = new JSONArray();
         for (Film film : films) {
@@ -39,7 +38,6 @@ public class SearchServlet extends HttpServlet {
         }
         JSONObject jo = new JSONObject();
         jo.put("objects", ja);
-        System.out.println("dddd");
 
         response.setContentType("text/json");
         response.getWriter().write(jo.toString());
