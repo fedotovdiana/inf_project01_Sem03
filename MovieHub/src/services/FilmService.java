@@ -65,4 +65,8 @@ public class FilmService {
     public List<Film> getAfishaFilms() {
         return filmDAO.getAfishaFilms();
     }
+
+    public List<Film> getByLikePattern(String pattern) {
+        return filmDAO.getByLikePattern(pattern);
+    }
 }

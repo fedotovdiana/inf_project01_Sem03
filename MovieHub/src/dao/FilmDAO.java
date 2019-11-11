@@ -29,6 +29,7 @@ public class FilmDAO {
     private String SQL_ADD_DISLIKE = "INSERT INTO dislikes VALUES (?, ?)";
     private String SQL_SELECT_AFISHA = "SELECT * FROM films WHERE DATE(date) > current_timestamp";
     private String SQL_SELECT_TOP = "SELECT * FROM films ORDER BY (SELECT COUNT(*) FROM likes WHERE film_id = films.id) DESC LIMIT 4";
+    private String SQL_SELECT_LIKE ="SELECT * FROM films WHERE NAME LIKE ?";
 
     private Connection connection;
 
@@ -300,6 +301,24 @@ public class FilmDAO {
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement(SQL_SELECT_AFISHA);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String date = new SimpleDateFormat("dd.MM.YYYY").format(rs.getTimestamp("date"));
+                Film film = new Film(rs.getInt("id"), rs.getString("name"), rs.getString("country"), date,
+                        rs.getString("photo"), rs.getString("text"));
+                films.add(film);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return films;
+    }
+
+    public List<Film> getByLikePattern(String pattern) {
+        List<Film> films = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(SQL_SELECT_LIKE);
+            st.setString(1, "%" + pattern + "%");
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 String date = new SimpleDateFormat("dd.MM.YYYY").format(rs.getTimestamp("date"));

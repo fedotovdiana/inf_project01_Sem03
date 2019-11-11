@@ -89,7 +89,7 @@ public class SignUpServlet extends HttpServlet {
 //                if (cookie != null) {
 //                User u = userService.getUser(cookie.getValue());
 //                request.getSession().setAttribute("user", u);
-//                response.sendRedirect("/films"); 
+//                response.sendRedirect("/films");
 //                } else {
 //                Helper.render(request, response, "sign_up.ftl", null);
 //                }

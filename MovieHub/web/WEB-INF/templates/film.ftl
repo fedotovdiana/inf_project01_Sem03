@@ -120,7 +120,7 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <img src="../../front/img/${film.name}" alt="..." class="img-thumbnail ">
+            <img src="../../front/img/${film.photo}" alt="..." class="img-thumbnail ">
             <div class="input-group">
                 <#if checklists?has_content>
                     <div>

@@ -206,6 +206,15 @@
         <url-pattern>/dislike</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>search</servlet-name>
+        <servlet-class>servlets.SearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>search</servlet-name>
+        <url-pattern>/dosearch</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.css</url-pattern>
